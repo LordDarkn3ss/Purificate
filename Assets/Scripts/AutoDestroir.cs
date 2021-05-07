@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class AutoDestroir : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField]
+    bool menuAnim;
     void Start()
     {
-        
+        if (menuAnim)
+        {
+            Destroy(this.gameObject, 6f);
+        }
     }
 
     // Update is called once per frame
