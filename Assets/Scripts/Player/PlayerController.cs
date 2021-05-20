@@ -5,10 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    //Barras Sistema
-    [SerializeField]
-    Image LifeBar, Mana, Estamina;
-    float hP, mP, eP;
+   
 
     [SerializeField] //ataques
     float waterA1Cust;
@@ -18,22 +15,24 @@ public class PlayerController : MonoBehaviour
 
     //Bala
     [SerializeField]
-    float bulletVelo;
-    public static float bulletSpeed;
+    Transform bulletSpawn;
+    [SerializeField]
+    GameObject bulletOBJ;
+    [SerializeField]
+    float fireRate, nextFire;
 
-    //movimentação
+    //movimentaï¿½ï¿½o
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
 
     [SerializeField]
     float playerSpeed = 2.0f;
-
-    private float jumpHeight = 1.0f;
+    [SerializeField]
+    float jumpHeight = 1.0f;
     private float gravityValue = -9.81f;
 
-    [SerializeField]
-    GameObject tiro, pivotAtirar;
+  
 
 
     Rigidbody rb;
@@ -41,7 +40,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         //Timers
-        StartCoroutine(manaTimer());
+        //StartCoroutine(manaTimer());
 
 
 
@@ -52,19 +51,18 @@ public class PlayerController : MonoBehaviour
  
     void Update()
     {
-        bulletSpeed = bulletVelo * 10000;
-
+       
         //print(mP);
 
 
         mover();
         atacar();
-        status();
+        //status();
 
 
     }
 
-    void status()
+    /*void status()
     {
         //mana
         if (mP < 0)
@@ -77,15 +75,16 @@ public class PlayerController : MonoBehaviour
         }
         Mana.transform.localScale = new Vector2(mP,1);
 
-    }
+    }*/
 
     void atacar()
     {
         ///Ataque
-        if (Input.GetKeyDown(KeyCode.E) && mP>=waterA1Cust)
+        if(Input.GetKeyDown(KeyCode.X) && Time.time > nextFire && PlayerManaController.playerMana >= 1)
         {
-            Instantiate(tiro, pivotAtirar.transform.position, Quaternion.identity);
-            mP -= waterA1Cust;
+        nextFire = Time.time + fireRate;
+        GameObject cloneBullet = Instantiate(bulletOBJ,bulletSpawn.position, bulletSpawn.rotation);
+        PlayerManaController.playerMana--;
         }
     }
 
@@ -96,7 +95,7 @@ public class PlayerController : MonoBehaviour
         {
             playerVelocity.y = 0f;
         }
-        ///Movimentação Base
+        ///Movimentaï¿½ï¿½o Base
         Vector2 move = new Vector2(Input.GetAxis("Horizontal"), 0);
         controller.Move(move * Time.deltaTime * playerSpeed);
 
@@ -118,7 +117,7 @@ public class PlayerController : MonoBehaviour
 
     // IEnumerators
 
-    IEnumerator manaTimer()
+    /*IEnumerator manaTimer()
     {
         while (true)
         {
@@ -128,5 +127,5 @@ public class PlayerController : MonoBehaviour
                 mP += mPRegen;
             }
         }
-    }
+    }*/
 }

@@ -4,26 +4,16 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    Rigidbody2D rb;
-    
     [SerializeField]
-   Transform player;
+    float speed, tempoDestroir;
     void Start()
     {
-       rb = GetComponent<Rigidbody2D>();
-        if (transform.position.x > player.position.x)
-        {
-            rb.AddForce(Vector2.right * PlayerController.bulletSpeed * Time.deltaTime);
-        }
-        else
-        {
-            rb.AddForce(Vector2.right * PlayerController.bulletSpeed * Time.deltaTime * -1);
-        }
+       Destroy(gameObject,tempoDestroir);
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        
+      transform.Translate(Vector2.right * speed * Time.deltaTime);  
     }
 }
