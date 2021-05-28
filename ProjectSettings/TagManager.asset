@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Obstaculo
+  - BlueKey
+  - RedKey
   layers:
   - Default
   - TransparentFX

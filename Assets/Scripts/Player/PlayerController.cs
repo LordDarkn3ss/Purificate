@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] //ataques
     float waterA1Cust;
+    [SerializeField]
+    GameObject espada;
 
     [SerializeField] //Regen
     float mPRegen;
@@ -79,12 +81,17 @@ public class PlayerController : MonoBehaviour
 
     void atacar()
     {
-        ///Ataque
+        ///Ataque water1
         if(Input.GetKeyDown(KeyCode.X) && Time.time > nextFire && PlayerManaController.playerMana >= 1)
         {
         nextFire = Time.time + fireRate;
         GameObject cloneBullet = Instantiate(bulletOBJ,bulletSpawn.position, bulletSpawn.rotation);
         PlayerManaController.playerMana--;
+        }
+        ///Ataque sword1
+         if(Input.GetKeyDown(KeyCode.C))
+        {
+        espada.SetActive(true);
         }
     }
 
