@@ -23,4 +23,7 @@ public class PlayerLifeController : MonoBehaviour
     playerLifeBar.fillAmount = playerLife / playerLifeMax;
     playerLifeNumber.text = playerLife+"/"+playerLifeMax; 
     }
+
+
+    
 }

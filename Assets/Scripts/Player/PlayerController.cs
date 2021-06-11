@@ -11,6 +11,10 @@ public class PlayerController : MonoBehaviour
     float waterA1Cust;
     [SerializeField]
     GameObject espada;
+    [SerializeField]
+    public GameObject lifeBar;
+
+
 
     [SerializeField] //Regen
     float mPRegen;
@@ -122,6 +126,14 @@ public class PlayerController : MonoBehaviour
     }
 
 
+void OnControllerColliderHit(ControllerColliderHit hit) { 
+         if(hit.gameObject.tag == "Cigarratu")
+        {
+           print("Eita");
+            lifeBar.GetComponent<PlayerLifeController>().playerLife--;
+            
+        }
+    }
     // IEnumerators
 
     /*IEnumerator manaTimer()

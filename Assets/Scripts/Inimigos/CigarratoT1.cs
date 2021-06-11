@@ -4,39 +4,86 @@ using UnityEngine;
 
 public class CigarratoT1 : MonoBehaviour
 {
+    float a; //velocidade inicial
     [SerializeField]
-    float velocidade, distancia;
+    float velocidade,investidaVelo, distanciaCheckAbism, distanciaVision, vida;
     [SerializeField]
     LayerMask obstaculo;
-    bool direita = true; //indica a direÁ„o ao qual se mover
+    bool direita = true; //indica a dire√ß√£o ao qual se mover
+    bool vendoPlayer = false; //indica se o player est√° no campo de vis√£o
     public Transform escaner;
+
+    
 
     void Start()
     {
-        
+        vida = 2;
+      a = velocidade;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector2.right * velocidade * Time.deltaTime); //Movimenta o inimigo
-        RaycastHit2D piso = Physics2D.Raycast(escaner.position, Vector3.down, distancia, obstaculo); //Checar Queda, desviar rota
-        Debug.DrawRay(escaner.position, Vector3.down,Color.red);
+        
+        scanAbismo();
+        scanVision();
+        
 
-        if(piso.collider==false) //se abismo a frente
+        
+    }
+    void scanAbismo()
+    {
+    //scan para abismo 
+        if(Physics.Raycast(escaner.position,-escaner.up,distanciaCheckAbism))//detectar abismo
         {
-            if(direita==true)//se estiver para a direita
-            {
-                transform.eulerAngles = new Vector3(0, 0, 0);
-                direita = false;
-                print("direitaFalse");
-            }
-            else //mudar direÁ„o
-            {
-                transform.eulerAngles = new Vector3(0, 180, 0); //girar inimigo mudando direÁ„o
-                direita = true;
-                print("direitaTrue");
-            }
+            transform.Translate(Vector2.right * velocidade * Time.deltaTime); //Movimenta o inimigo
+        }
+        else if(direita && !vendoPlayer)
+        {
+            
+                transform.eulerAngles = new Vector3(0, 180, 0); //girar inimigo
+                direita=false;
+  
+        }
+        else if(!vendoPlayer)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0); //girar inimigo
+                direita=true;
+        }
+        Debug.DrawLine(escaner.position,new Vector3(escaner.position.x,escaner.position.y - distanciaCheckAbism,escaner.position.z),Color.red);
+
+    }
+    void scanVision()
+    {
+    //scan para o player
+        RaycastHit ver;
+        if(Physics.Raycast(escaner.position,escaner.forward,out ver,distanciaVision))
+        {
+            
+              if(ver.transform.tag == "Player") //v√™ se o raycast tocou no player
+              {
+                 
+               velocidade = investidaVelo;//adiciona a investida
+               vendoPlayer = true; //faz ignorar abismos
+              }
+              else
+              {
+                  velocidade = a; //retorna velocidade inicial
+                  vendoPlayer = false; //n√£o est√° vendo o player ent√£o volta a ver os abismos
+              }
+        }
+        if(direita){
+        Debug.DrawLine(escaner.position,new Vector3(escaner.position.x+distanciaVision,escaner.position.y,escaner.position.z),Color.red);
+        }
+        else{
+            Debug.DrawLine(escaner.position,new Vector3(escaner.position.x-distanciaVision,escaner.position.y,escaner.position.z),Color.red);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if(other.gameObject.tag == "Sword" || other.gameObject.tag == "WaterBall")
+        {
+            vida--;
         }
     }
 }

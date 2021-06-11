@@ -7,6 +7,9 @@ TagManager:
   - Obstaculo
   - BlueKey
   - RedKey
+  - Sword
+  - Cigarratu
+  - WaterBall
   layers:
   - Default
   - TransparentFX
