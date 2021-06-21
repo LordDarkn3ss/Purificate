@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     GameObject bulletOBJ;
     [SerializeField]
-    float fireRate, nextFire;
+    float fireRate, nextFire, danoRecebido,invunerabilidade;
 
     //movimenta��o
     private CharacterController controller;
@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour
 
         mover();
         atacar();
+
         //status();
 
 
@@ -107,6 +108,7 @@ public class PlayerController : MonoBehaviour
             playerVelocity.y = 0f;
         }
         ///Movimenta��o Base
+        if(!espada.activeSelf){
         Vector2 move = new Vector2(Input.GetAxis("Horizontal"), 0);
         controller.Move(move * Time.deltaTime * playerSpeed);
 
@@ -114,7 +116,7 @@ public class PlayerController : MonoBehaviour
         {
             gameObject.transform.right = move;
         }
-
+        }
         // Changes the height position of the player..
         if (Input.GetButtonDown("Jump") && groundedPlayer)
         {
@@ -127,10 +129,12 @@ public class PlayerController : MonoBehaviour
 
 
 void OnControllerColliderHit(ControllerColliderHit hit) { 
-         if(hit.gameObject.tag == "Cigarratu")
+         if(hit.gameObject.tag == "Cigarratu" && Time.time > invunerabilidade)
         {
            print("Eita");
             lifeBar.GetComponent<PlayerLifeController>().playerLife--;
+            invunerabilidade = Time.time + danoRecebido;
+            
             
         }
     }
