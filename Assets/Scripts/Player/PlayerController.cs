@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-   
+    [SerializeField]
+    Animation playerDamage;
 
     [SerializeField] //ataques
     float waterA1Cust;
     [SerializeField]
-    GameObject espada;
+    GameObject espada, playerSprite;
     [SerializeField]
     public GameObject lifeBar;
 
@@ -57,7 +58,7 @@ public class PlayerController : MonoBehaviour
  
     void Update()
     {
-       
+       playerDamage = playerSprite.GetComponent<Animation>();
         //print(mP);
 
 
@@ -97,6 +98,8 @@ public class PlayerController : MonoBehaviour
          if(Input.GetKeyDown(KeyCode.C))
         {
         espada.SetActive(true);
+        
+            
         }
     }
 
@@ -131,10 +134,12 @@ public class PlayerController : MonoBehaviour
 void OnControllerColliderHit(ControllerColliderHit hit) { 
          if(hit.gameObject.tag == "Cigarratu" && Time.time > invunerabilidade)
         {
-           print("Eita");
+           
             lifeBar.GetComponent<PlayerLifeController>().playerLife--;
-            invunerabilidade = Time.time + danoRecebido;
             
+            invunerabilidade = Time.time + danoRecebido;
+            playerDamage.Play("Dano");
+            print("Eita");
             
         }
     }
