@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    Animation playerDamage;
+    Animator player;
 
     [SerializeField] //ataques
     float waterA1Cust;
@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     GameObject bulletOBJ;
     [SerializeField]
-    float fireRate, nextFire, danoRecebido,invunerabilidade;
+    float fireRate, nextFire, damageRate, nextDamage;
 
     //movimenta��o
     private CharacterController controller;
@@ -58,7 +58,10 @@ public class PlayerController : MonoBehaviour
  
     void Update()
     {
-       playerDamage = playerSprite.GetComponent<Animation>();
+        if(transform.position.z != 0)
+        {
+            transform.position = new Vector3(transform.position.x,0,transform.position.y);
+        }
         //print(mP);
 
 
@@ -105,6 +108,11 @@ public class PlayerController : MonoBehaviour
 
     void mover()
     {
+        float yH = Input.GetAxis("Horizontal");
+        if(yH != 0 && groundedPlayer){player.SetBool("Move", true);}else{player.SetBool("Move", false);}
+
+
+
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
         {
@@ -114,7 +122,7 @@ public class PlayerController : MonoBehaviour
         if(!espada.activeSelf){
         Vector2 move = new Vector2(Input.GetAxis("Horizontal"), 0);
         controller.Move(move * Time.deltaTime * playerSpeed);
-
+        
         if (move != Vector2.zero)
         {
             gameObject.transform.right = move;
@@ -131,14 +139,13 @@ public class PlayerController : MonoBehaviour
     }
 
 
-void OnControllerColliderHit(ControllerColliderHit hit) { 
-         if(hit.gameObject.tag == "Cigarratu" && Time.time > invunerabilidade)
+ private void OnTriggerEnter(Collider other) {
+         if(other.gameObject.tag == "Garras" && Time.time > nextDamage)
         {
-           
+           nextDamage = Time.time + damageRate;
             lifeBar.GetComponent<PlayerLifeController>().playerLife--;
             
-            invunerabilidade = Time.time + danoRecebido;
-            playerDamage.Play("Dano");
+            player.SetTrigger("Dano");
             print("Eita");
             
         }

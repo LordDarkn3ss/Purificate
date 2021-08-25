@@ -7,7 +7,7 @@ public class CigarratoTier1 : MonoBehaviour
     public Transform escaner; // o escaner / olho / visão do inimigo
     public float distanciaCheckAbism, speed; // um ranger da visão de abismo e uma variavel de velocidade
     public bool attackRanger, direita; // um BOOL pra saber se o player tá no ranger de ataque, e um pra saber a direção a seguir
-
+    public float life = 3;
     public  Animator tier1; // animator controller do Cigarratu Tier 1
 
     void Start()
@@ -27,7 +27,8 @@ public class CigarratoTier1 : MonoBehaviour
         }
         else
         {
-           tier1.Play("Attack"); //rodar animação de ataque
+           tier1.SetTrigger("Garra"); //rodar animação de ataque
+           attackRanger = false;
             
         }
 
@@ -53,10 +54,20 @@ public class CigarratoTier1 : MonoBehaviour
          }
     }
 
-    private void OnTriggerEnter(Collider other) {
-        if(other.tag == "Player") // descobrir que o player está dentro do ranger de ataque
+    private void OnTriggerStay(Collider other) {
+        if(other.gameObject.tag == "Player") // descobrir que o player está dentro do ranger de ataque
         {
             attackRanger = true; // disse que tá no ranger de ataque
         }
+        
+    }
+    private void OnTriggerEnter(Collider other) {
+        if(other.gameObject.tag == "Sword")
+        {
+            print("PACADA");
+            life--;
+            if(life<=0){Destroy(this.gameObject);}
+        }
+        
     }
 }

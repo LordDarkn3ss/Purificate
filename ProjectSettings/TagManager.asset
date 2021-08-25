@@ -11,6 +11,7 @@ TagManager:
   - Cigarratu
   - WaterBall
   - Garras
+  - Parede
   layers:
   - Default
   - TransparentFX
