@@ -7,11 +7,12 @@ public class CigarratoTier1 : MonoBehaviour
     public Transform escaner; // o escaner / olho / visão do inimigo
     public float distanciaCheckAbism, speed; // um ranger da visão de abismo e uma variavel de velocidade
     public bool attackRanger, direita; // um BOOL pra saber se o player tá no ranger de ataque, e um pra saber a direção a seguir
-    public float life = 3;
+    
     public  Animator tier1; // animator controller do Cigarratu Tier 1
 
-    void Start()
+    void Awake()
     {
+        direita = true;
         tier1 = GetComponent<Animator>(); // Recebendo o componente de animator
     }
 
@@ -61,13 +62,5 @@ public class CigarratoTier1 : MonoBehaviour
         }
         
     }
-    private void OnTriggerEnter(Collider other) {
-        if(other.gameObject.tag == "Sword")
-        {
-            print("PACADA");
-            life--;
-            if(life<=0){Destroy(this.gameObject);}
-        }
-        
-    }
+   
 }

@@ -10,7 +10,7 @@ public class AutoDestroir : MonoBehaviour
     {
         if (menuAnim)
         {
-            Destroy(this.gameObject, 6f);
+            Destroy(this.gameObject, 6f); 
         }
     }
 

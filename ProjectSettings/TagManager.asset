@@ -9,9 +9,9 @@ TagManager:
   - RedKey
   - Sword
   - Cigarratu
-  - WaterBall
   - Garras
   - Parede
+  - Bullet
   layers:
   - Default
   - TransparentFX
