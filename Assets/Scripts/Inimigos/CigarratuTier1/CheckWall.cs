@@ -17,14 +17,13 @@ public class CheckWall : MonoBehaviour
     
     void Update()
     {
-        print(paiTransform.transform.eulerAngles.z);
+       
     }
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Obstaculo")
         {
         
-        print("COLIDIU EM");
            
            if(pai.direita)
          {
