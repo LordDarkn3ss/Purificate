@@ -12,6 +12,13 @@ TagManager:
   - Garras
   - Parede
   - Bullet
+  - Plataform
+  - Fire
+  - Escada
+  - Spike
+  - Boss
+  - CP
+  - YellowKey
   layers:
   - Default
   - TransparentFX
@@ -21,7 +28,7 @@ TagManager:
   - UI
   - Obstaculo
   - Player
-  - 
+  - Plataform
   - 
   - 
   - 

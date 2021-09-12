@@ -8,6 +8,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     Animator player;
 
+    [SerializeField]
+    Transform checkpoint;
+
+
     [SerializeField] //ataques
     float waterA1Cust;
     [SerializeField]
@@ -38,8 +42,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float jumpHeight = 1.0f;
     private float gravityValue = -9.81f;
+    [SerializeField]
+    float escadaUp;
 
-  
+
 
 
     Rigidbody rb;
@@ -98,7 +104,7 @@ public class PlayerController : MonoBehaviour
         PlayerManaController.playerMana--;
         }
         ///Ataque sword1
-         if(Input.GetKeyDown(KeyCode.C))
+         if(Input.GetKeyDown(KeyCode.C) && Inventario.YellowKey)
         {
         espada.SetActive(true);
         
@@ -138,17 +144,61 @@ public class PlayerController : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Spike")
+        {
+            print("espinhos");
+            lifeBar.GetComponent<PlayerLifeController>().playerLife--;
 
- private void OnTriggerEnter(Collider other) {
+            player.SetTrigger("Dano");
+            transform.position = new Vector2(checkpoint.position.x, checkpoint.position.y);
+
+        }
+
+        if (other.gameObject.tag == "Escada")
+        {
+            playerVelocity.y = escadaUp;
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "CP")
+        {
+            checkpoint = other.transform;
+            print("new check");
+        }
+
+        
+
+        
+
          if(other.gameObject.tag == "Garras" && Time.time > nextDamage)
         {
            nextDamage = Time.time + damageRate;
             lifeBar.GetComponent<PlayerLifeController>().playerLife--;
             
-            player.SetTrigger("Dano");
-            print("Eita");
-            
+            player.SetTrigger("Dano");          
         }
+
+        if (other.gameObject.tag == "Fire" && Time.time > nextDamage)
+        {
+            nextDamage = Time.time + damageRate;
+            lifeBar.GetComponent<PlayerLifeController>().playerLife--;
+
+            player.SetTrigger("Dano");
+
+        }
+
+        if (other.gameObject.tag == "Boss" && Time.time > nextDamage)
+        {
+            nextDamage = Time.time + damageRate;
+            lifeBar.GetComponent<PlayerLifeController>().playerLife--;
+
+            player.SetTrigger("Dano");
+        }
+
+
     }
     // IEnumerators
 

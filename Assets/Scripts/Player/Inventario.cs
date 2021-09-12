@@ -8,8 +8,8 @@ public class Inventario : MonoBehaviour
     [SerializeField]
     GameObject BluePort, RedPort, YellowPort; //chaves para o inventario
 
-    [SerializeField]
-    bool BlueKey, RedKey, YellowKey = false; //inicia com o inventario vazio
+    
+    public static bool BlueKey, RedKey, YellowKey = false; //inicia com o inventario vazio
     
     void Update()
     {
