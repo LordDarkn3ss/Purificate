@@ -146,19 +146,17 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Spike")
-        {
-            print("espinhos");
-            lifeBar.GetComponent<PlayerLifeController>().playerLife--;
-
-            player.SetTrigger("Dano");
-            transform.position = new Vector2(checkpoint.position.x, checkpoint.position.y);
-
-        }
+        
 
         if (other.gameObject.tag == "Escada")
         {
             playerVelocity.y = escadaUp;
+        }
+
+        if (other.gameObject.tag == "Spike") //teleportar
+        {
+            transform.position = new Vector2(checkpoint.position.x, checkpoint.position.y);
+
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -169,11 +167,20 @@ public class PlayerController : MonoBehaviour
             print("new check");
         }
 
-        
+        if (other.gameObject.tag == "Spike" && Time.time > nextDamage) //tirar vida
+        {
+            nextDamage = Time.time + damageRate;
+            print("espinhos");
+            lifeBar.GetComponent<PlayerLifeController>().playerLife--;
 
-        
+            player.SetTrigger("Dano");
+           
 
-         if(other.gameObject.tag == "Garras" && Time.time > nextDamage)
+        }
+
+
+
+        if (other.gameObject.tag == "Garras" && Time.time > nextDamage)
         {
            nextDamage = Time.time + damageRate;
             lifeBar.GetComponent<PlayerLifeController>().playerLife--;
@@ -184,19 +191,13 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Fire" && Time.time > nextDamage)
         {
             nextDamage = Time.time + damageRate;
-            lifeBar.GetComponent<PlayerLifeController>().playerLife--;
+            lifeBar.GetComponent<PlayerLifeController>().playerLife-= 4;
 
             player.SetTrigger("Dano");
 
         }
 
-        if (other.gameObject.tag == "Boss" && Time.time > nextDamage)
-        {
-            nextDamage = Time.time + damageRate;
-            lifeBar.GetComponent<PlayerLifeController>().playerLife--;
-
-            player.SetTrigger("Dano");
-        }
+        
 
 
     }

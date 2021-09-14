@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class PlayerLifeController : MonoBehaviour
 {
     public float playerLife, playerLifeMax;
@@ -16,6 +17,10 @@ public class PlayerLifeController : MonoBehaviour
     void Update()
     {
         UpdateLifeBar();
+        if(playerLifeBar.fillAmount == 0)
+        {
+            SceneManager.LoadScene("Area1");
+        }
     }
 
     void UpdateLifeBar()

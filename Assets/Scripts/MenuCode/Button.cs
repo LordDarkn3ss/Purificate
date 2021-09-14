@@ -21,4 +21,13 @@ public class Button : MonoBehaviour
     {
         SceneManager.LoadScene("Area1");
     }
+
+    public void carregarMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+    public void carregarCreditos()
+    {
+        SceneManager.LoadScene("Creditos");
+    }
 }

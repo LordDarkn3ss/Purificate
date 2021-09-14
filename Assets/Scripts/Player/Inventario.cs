@@ -6,11 +6,14 @@ public class Inventario : MonoBehaviour
 {
 
     [SerializeField]
-    GameObject BluePort, RedPort, YellowPort; //chaves para o inventario
+    GameObject BluePort, RedPort, YellowPort, SwordUI; //chaves para o inventario
 
     
     public static bool BlueKey, RedKey, YellowKey = false; //inicia com o inventario vazio
-    
+    private void Awake()
+    {
+        BlueKey = false; RedKey = false; YellowKey = false;
+    }
     void Update()
     {
         BluePort.SetActive(!BlueKey); //Testa se você tem a chave e abre o portão correspondente a ela /AZUL
@@ -35,6 +38,7 @@ public class Inventario : MonoBehaviour
         {
             print("PEGOU A ESPADA");
             YellowKey = true;
+            SwordUI.SetActive(true);
             Destroy(other.gameObject);
         }
     }

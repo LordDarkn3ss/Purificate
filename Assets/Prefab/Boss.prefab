@@ -690,6 +690,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   life: {fileID: 6241170051969297674}
+  playerLife: {fileID: 0}
+  barreiras: {fileID: 0}
+  BOSS: {fileID: 0}
+  damageRate: 0
+  nextDamage: 0
   dmgBall: 1
   dmgSword: 2
 --- !u!136 &6241170051619309325
