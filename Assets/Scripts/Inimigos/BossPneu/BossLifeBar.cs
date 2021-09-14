@@ -20,9 +20,10 @@ public class BossLifeBar : MonoBehaviour
     {
       if(life.fillAmount <= 0)
         {
+            Destroy(barreiras);
             print("BOSSDIE");
-            barreiras.SetActive(false);
-            Destroy(BOSS);
+            
+            Destroy(BOSS,0.5f);
         }
     }
     private void OnTriggerEnter(Collider other)
